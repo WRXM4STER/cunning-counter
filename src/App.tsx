@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { delay } from './utils/delay';
+import { increment, updateArray, updateSeconds } from './store/reducer/actionCreators';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
 
-function App() {
+const App:React.FC = () => {
+
+  const dispatch = useAppDispatch()
+  const {counter, seconds, array} = useAppSelector(state=>state.counterSlice)
+
+  useEffect(()=>{
+    if (counter>0) dispatch(updateArray())
+  },[counter])
+
+  useEffect(() => {
+    console.log(seconds)
+    delay(3000).then(ms => {
+      dispatch(increment())
+      dispatch(updateSeconds(ms/1000))
+    })
+  }, [seconds]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={()=>dispatch(increment())} >Инкрементировать</button>
+      <div>{counter}</div>
+      <div>
+        {
+          array.map((item)=>{return <span style={{marginRight:10}}>{item}</span>})
+        }
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
