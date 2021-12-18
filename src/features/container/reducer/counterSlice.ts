@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getRandom } from "../../utils/random";
+import { getRandom } from "../../../utils/random";
 
 interface ICounter {
     counter:number,

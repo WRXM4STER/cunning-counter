@@ -1,4 +1,4 @@
-import { AppDispatch } from "..";
+import { AppDispatch } from "../../../store";
 import { counterSlice } from "./counterSlice";
 
 export const updateArray = () => async (dispatch:AppDispatch) => {
